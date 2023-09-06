@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Authors";
+}
+<h1>@ViewData["Title"]</h1>
+@model IEnumerable<SubredditWebTracker.AuthorMomento>
+
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Number of new Posts</th>
+                                <th>Posts when started</th>
+                                <th>Posts right now</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NewPostCount)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PostCountAtStart)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PostCountLatest)</td>
+                                </tr>
+                            }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
