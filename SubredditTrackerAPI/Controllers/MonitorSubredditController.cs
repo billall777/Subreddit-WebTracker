@@ -26,20 +26,26 @@ namespace SubredditTrackerAPI.Controllers
         {
             _logger.LogInformation(message: $"MonitorSubreddit started at: {DateTime.Now}");
 
-            var appId = _Config["AppId"];
-            var refreshToken = _Config["refreshToken"];
-            var accessToken = _Config["accessToken"];
+            try
+            {
+                var appId = _Config["AppId"];
+                var refreshToken = _Config["refreshToken"];
+                var accessToken = _Config["accessToken"];
 
-            RedditClient reddit = new(appId: appId, refreshToken: refreshToken, accessToken: accessToken);
-            Subreddit worldnews = reddit.Subreddit("worldnews");
-            List<Post> newPosts = worldnews.Posts.GetNew();
+                RedditClient reddit = new(appId: appId, refreshToken: refreshToken, accessToken: accessToken);
+                Subreddit worldnews = reddit.Subreddit("worldnews");
+                List<Post> newPosts = worldnews.Posts.GetNew();
 
-            // Post UpVotes Statistics
-            UpdatePostStats(newPosts);
+                // Post UpVotes Statistics
+                UpdatePostStats(newPosts);
 
-            // Author Statistics
-            UpdateAuthorStats(newPosts);
-
+                // Author Statistics
+                UpdateAuthorStats(newPosts);
+            } catch (Exception ex)
+            {
+                StatisticsData data = StatisticsData.Instance;
+                data.Errors.Add(ex.Message);
+            }
             _logger.LogInformation(message: $"MonitorSubreddit Ended at: {DateTime.Now}");
             return "Success";
         }

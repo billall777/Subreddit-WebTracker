@@ -24,7 +24,7 @@ namespace SubredditWebTracker.Controllers
             return View(myPostsMomento);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Authors()
         {
             swaggerClient srvc = new swaggerClient("https://redditstatisticsapi.azurewebsites.net/", new System.Net.Http.HttpClient());
             var myAuthors = srvc.GetSubredditAuthorsAsync().Result;
